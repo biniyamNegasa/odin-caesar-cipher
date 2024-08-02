@@ -31,4 +31,9 @@ def caesar_cipher(text, shift_factor)
   return ciphered.join
 end
 
-puts caesar_cipher("What a string!", 5)
+print "Enter a text to be ciphered: "
+original = gets.chomp
+print "Enter the number of shifts: "
+shift_by = gets.chomp.to_i
+puts "original: #{original}"
+puts "ciphered: #{caesar_cipher(original, shift_by)}"
