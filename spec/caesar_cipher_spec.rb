@@ -36,6 +36,31 @@ describe CaesarCipher do
   end
 
   describe '#alphabet?' do
+    subject(:caesar_alphabet) {described_class.new('', 0)}
+    context 'When it is an alphabet' do
+      it 'works with small letters' do
+        expect(caesar_alphabet.alphabet?('a')).to be(true)
+        expect(caesar_alphabet.alphabet?('z')).to be(true)
+        expect(caesar_alphabet.alphabet?('h')).to be(true)
+        expect(caesar_alphabet.alphabet?('i')).to be(true)
+      end
+      it 'works with capital letters' do
+        expect(caesar_alphabet.alphabet?('A')).to be(true)
+        expect(caesar_alphabet.alphabet?('Z')).to be(true)
+        expect(caesar_alphabet.alphabet?('B')).to be(true)
+        expect(caesar_alphabet.alphabet?('J')).to be(true)
+      end
+    end
+    context 'When it is not an alphabet' do
+      it "doesn't work with numbers" do
+        expect(caesar_alphabet.alphabet?('8')).to be(false)
+      end
+      it "doesn't work with symbols" do
+        expect(caesar_alphabet.alphabet?('.')).to be(false)
+        expect(caesar_alphabet.alphabet?('/')).to be(false)
+        expect(caesar_alphabet.alphabet?(']')).to be(false)
+      end
+    end
   end
 
   describe '#capital?' do
