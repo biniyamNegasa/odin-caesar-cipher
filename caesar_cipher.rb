@@ -1,36 +1,37 @@
-def alp?(character)
-  return 1 if character <= 'Z' && character >= 'A'
+# frozen_string_literal: false
 
-  return 0 if character <= 'z' && character >= 'a'
-
-  -1
-end
-
-def caesar_cipher(text, shift_factor)
-  text_array = text.split('')
-  ciphered = []
-  a_cap = 'A'.ord
-  a = 'a'.ord
-
-  text_array.each do |ch|
-    val = alp?(ch)
-    ascii_code = ch.ord
-    if val == 1
-      curr = a_cap + ((ascii_code - a_cap) + shift_factor) % 26
-      ciphered.push(curr.chr)
-    elsif val.zero?
-      curr = a + ((ascii_code - a) + shift_factor) % 26
-      ciphered.push(curr.chr)
-    else
-      ciphered.push(ch)
-    end
+# A ciphering class
+class CaesarCipher
+  def initialize(text, shift_factor)
+    @original = text
+    @shift_factor = shift_factor
   end
-  ciphered.join
-end
 
-print 'Enter a text to be ciphered: '
-original = gets.chomp
-print 'Enter the number of shifts: '
-shift_by = gets.chomp.to_i
-puts "original: #{original}"
-puts "ciphered: #{caesar_cipher(original, shift_by)}"
+  def cipher
+    ciphered = ''
+
+    @original.each_char do |char|
+      ciphered << (if alphabet?(char)
+                     capital?(char) ? shift_by('A', char) : shift_by('a', char)
+                   else
+                     char
+                   end)
+    end
+    ciphered
+  end
+
+  def shift_by(base, char)
+    base_ascii = base.ord
+    char_ascii = char.ord
+    order = base_ascii + ((char_ascii - base_ascii) + @shift_factor) % 26
+    order.chr
+  end
+
+  def capital?(char)
+    char.between?('A', 'Z')
+  end
+
+  def alphabet?(char)
+    char.between?('A', 'Z') || char.between?('a', 'z')
+  end
+end
