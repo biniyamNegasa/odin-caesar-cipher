@@ -36,7 +36,7 @@ describe CaesarCipher do
   end
 
   describe '#alphabet?' do
-    subject(:caesar_alphabet) {described_class.new('', 0)}
+    subject(:caesar_alphabet) { described_class.new('', 0) }
     context 'When it is an alphabet' do
       it 'works with small letters' do
         expect(caesar_alphabet.alphabet?('a')).to be(true)
@@ -64,5 +64,12 @@ describe CaesarCipher do
   end
 
   describe '#capital?' do
+    subject(:caesar_capital) { described_class.new('', 0) }
+    it 'returns false if not capital' do
+      expect(caesar_capital.capital?('a')).to be(false)
+    end
+    it 'returns true if capital' do
+      expect(caesar_capital.capital?('J')).to be(true)
+    end
   end
 end
